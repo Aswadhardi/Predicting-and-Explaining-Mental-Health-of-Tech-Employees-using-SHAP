@@ -54,5 +54,7 @@ def features_engineering_extraction(df):
         (df['role_count'] >= 1), 'EmploymentCompanySize'] = 'Tech Employee Corporation Company'
     df.loc[(df['TechCompany'] == 0.0) & (df['TechRole'] == 0.0) | (
         df['role_count'] == 0), 'EmploymentCompanySize'] = 'Non-Tech Employee'
+    
+    df['EmploymentCompanySize'] = df['EmploymentCompanySize'].astype('category')
 
     return df
