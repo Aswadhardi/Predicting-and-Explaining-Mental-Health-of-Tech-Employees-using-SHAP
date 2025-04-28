@@ -91,7 +91,7 @@ def impute_missing_values(df):
             if df[column].dtype == 'object' or df[column].dtype == 'category':
                 df[column]=df[column].fillna(df[column].mode()[0])
             else:
-                df[column]=df[column].fillna(df[column].mean())
+                df[column]=df[column].fillna(df[column].median())
     return df
 
 
