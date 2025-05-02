@@ -10,9 +10,7 @@ def get_models():
         "Logistic Regression (Tuned)": {
             "model": LogisticRegression(max_iter=1000, solver='saga', random_state=42),
             "params": {
-                'C': [0.01, 0.1, 1.0, 10.0],
                 'penalty': ['l1', 'l2'],
-                'solver': ['liblinear', 'saga']
             }
         },
         "Random Forest (Tuned)": {
@@ -23,7 +21,6 @@ def get_models():
                 'max_features': ['sqrt', 'log2'],
                 'min_samples_split': [2, 5, 10],
                 'min_samples_leaf': [1, 2, 4],
-                'bootstrap': [True, False]
             }
         },
         "Decision Tree Classifier (Tuned)": {
@@ -32,7 +29,7 @@ def get_models():
                 'max_depth': [None, 10, 20],
                 'min_samples_split': [2, 5, 10],
                 'min_samples_leaf': [1, 2, 4],
-                'criterion': ['gini', 'entropy']
+                'criterion': ['gini']
             }
         },
         "AdaBoost Classifier (Tuned)": {
@@ -44,12 +41,10 @@ def get_models():
         }, "XGBoost (Tuned)": {
             "model": XGBClassifier(use_label_encoder=False, eval_metric='mlogloss', random_state=42),
             "params": {
-                'n_estimators': [100, 200, 300],
+                'n_estimators': [100, 200],
                 'max_depth': [3, 5, 7],
                 'learning_rate': [0.01, 0.05, 0.1],
-                'subsample': [0.6, 0.8, 1.0],
-                'colsample_bytree': [0.6, 0.8, 1.0],
-                'gamma': [0, 0.1, 0.3]
+                
             }
         },
 

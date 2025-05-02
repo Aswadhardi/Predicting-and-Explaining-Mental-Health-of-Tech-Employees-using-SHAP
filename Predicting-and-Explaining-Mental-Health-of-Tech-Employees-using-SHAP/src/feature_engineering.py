@@ -37,5 +37,23 @@ def features_engineering_extraction(df):
                                                        "100-500": "101-500", '500-1000': '500+',
                                                        'More than 1000': '500+'})
     df['EmployeeCount'] = np.where(
-        (df['SelfEmployed'] == 'Yes'), '1', df['EmployeeCount'])
+        (df['SelfEmployed'] == 'Yes'), 1, df['EmployeeCount'])
+    
+    
+     # Combine Employment Features
+    df['EmploymentCompanySize'] = np.nan
+    df.loc[(df['EmployeeCount'] == '1'), 'EmploymentCompanySize'] = 'Self-Employed'
+    df.loc[(df['EmployeeCount'].isin([1,'2-25', '26-100', '101-500', '500+']))
+        & (df['role_count'] >= 1), 'EmploymentCompanySize'] = 'Tech-Role'
+    df.loc[(df['EmployeeCount'] == '2-25') & (df['TechCompany'] == 1.0) &
+        (df['role_count'] >= 1), 'EmploymentCompanySize'] = 'Tech Employee Small Company'
+    df.loc[(df['EmployeeCount'] == '26-100') & (df['TechCompany'] == 1.0) &
+        (df['role_count'] >= 1), 'EmploymentCompanySize'] = 'Tech Employee Medium Company'
+    df.loc[(df['EmployeeCount'] == '101-500') & (df['TechCompany'] == 1.0) &
+        (df['role_count'] >= 1), 'EmploymentCompanySize'] = 'Tech Employee Large Company'
+    df.loc[(df['EmployeeCount'] == '500+') & (df['TechCompany'] == 1.0) &
+        (df['role_count'] >= 1), 'EmploymentCompanySize'] = 'Tech Employee Corporation Company'
+    df.loc[(df['TechCompany'] == 0.0) & (df['TechRole'] == 0.0) | (
+        df['role_count'] == 0), 'EmploymentCompanySize'] = 'Non-Tech Employee'
+    
     return df
